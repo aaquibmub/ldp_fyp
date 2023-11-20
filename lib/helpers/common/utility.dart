@@ -100,7 +100,7 @@ class Utility {
               color: Constants.primaryColor,
             ),
             child: Text(
-              'Hello, ${(currentuser != null ? currentuser.userName : ' ')}',
+              'Hello, ${(currentuser != null ? currentuser.username : ' ')}',
             ),
           ),
           ListTile(

@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Theme.of(context).primaryColor)),
         onPressed: () => _submit(context),
         child: Text(
-          'SIGN IN',
+          'Login',
           style: Theme.of(context).primaryTextTheme.labelLarge,
         ),
       );
@@ -125,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   height: 40,
                                 ),
                                 Text(
-                                  'Sign In',
+                                  'Login',
                                   style:
                                       Theme.of(context).textTheme.displaySmall,
                                 ),

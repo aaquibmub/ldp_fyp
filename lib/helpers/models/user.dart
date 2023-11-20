@@ -4,18 +4,18 @@ import 'package:json_annotation/json_annotation.dart';
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class User {
   final String id;
-  final String userName;
+  final String username;
   final String email;
 
   User({
     @required this.id,
-    @required this.userName,
+    @required this.username,
     this.email,
   });
 
   factory User.fromJson(dynamic json) => User(
         id: json['id'] as String,
-        userName: json['userName'] as String,
+        username: json['username'] as String,
         email: json['email'] as String,
       );
   Map<String, dynamic> toJson() => userToJson(this);
@@ -25,7 +25,7 @@ class User {
   ) =>
       <String, dynamic>{
         'id': instance.id,
-        'userName': instance.userName,
+        'username': instance.username,
         'email': instance.email,
       };
 }

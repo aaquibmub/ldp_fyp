@@ -8,13 +8,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../helpers/models/user.dart';
 
 class Auth with ChangeNotifier {
-  String _token;
-  DateTime _expiryDate;
   User _user;
   Timer _authTimer;
 
   bool get isAuth {
-    return token != null;
+    return _user != null;
   }
 
   User get currentUser {
@@ -24,18 +22,9 @@ class Auth with ChangeNotifier {
   String get userName {
     String username = '';
     if (_user != null) {
-      username = _user.userName;
+      username = _user.username;
     }
     return username;
-  }
-
-  String get token {
-    if (_token != null &&
-        _expiryDate != null &&
-        _expiryDate.isAfter(DateTime.now())) {
-      return _token;
-    }
-    return null;
   }
 
   Future<String> _authenticate(
@@ -46,6 +35,7 @@ class Auth with ChangeNotifier {
     final user = users.firstWhere(
         (user) => user['username'] == username && user['password'] == password);
     if (user != null) {
+      _user = User.fromJson(user);
       return '';
     }
     return 'User not registered';
@@ -66,6 +56,11 @@ class Auth with ChangeNotifier {
     String email,
     String password,
   ) async {
+    final users = await DbHelper.getData('users');
+    final user = users.any((user) => user['username'] == username);
+    if (user) {
+      return 'User already registered';
+    }
     await DbHelper.insert(
       'users',
       {
@@ -79,9 +74,7 @@ class Auth with ChangeNotifier {
   }
 
   void logout() async {
-    _token = null;
     _user = null;
-    _expiryDate = null;
     if (_authTimer != null) {
       _authTimer.cancel();
       _authTimer = null;

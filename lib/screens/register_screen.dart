@@ -84,13 +84,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       if (error != '') {
         _showErrorDialogue(context, error);
       } else {
-        Navigator.of(context).pushReplacementNamed(Routes.homeScreen);
+        Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
       }
     } catch (error) {
       setState(() {
         _isLoading = false;
       });
-      const errorMessage = 'Could not authenticate';
+      const errorMessage = 'Could not register';
       _showErrorDialogue(context, errorMessage);
     }
   }
