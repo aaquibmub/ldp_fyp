@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../helpers/common/constants.dart';
 import '../helpers/common/routes.dart';
 import '../providers/auth.dart';
 import '../screens/loading_screen.dart';
@@ -115,7 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
 
     return Scaffold(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: Constants.backgroundColor,
       body: _isLoading
           ? LoadingScreen()
           : SingleChildScrollView(

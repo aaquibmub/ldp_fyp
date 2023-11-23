@@ -5,8 +5,10 @@ import 'package:ldp_fyp/providers/auth.dart';
 import 'package:ldp_fyp/providers/loan_provider.dart';
 import 'package:ldp_fyp/screens/history_screen.dart';
 import 'package:ldp_fyp/screens/home_screen.dart';
+import 'package:ldp_fyp/screens/ldp/ldp_information_screen.dart';
 import 'package:ldp_fyp/screens/login_screen.dart';
 import 'package:ldp_fyp/screens/register_screen.dart';
+import 'package:ldp_fyp/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -42,7 +44,7 @@ class MyApp extends StatelessWidget {
                     labelLarge: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color: Colors.white,
+                      color: Constants.textColor1,
                     ),
                   ),
               inputDecorationTheme:
@@ -56,7 +58,7 @@ class MyApp extends StatelessWidget {
                     displayLarge: const TextStyle(
                       fontSize: 62,
                       fontWeight: FontWeight.w300,
-                      color: Constants.primaryColor,
+                      color: Constants.textColor,
                     ),
                     displayMedium: const TextStyle(
                       fontSize: 62,
@@ -79,13 +81,26 @@ class MyApp extends StatelessWidget {
                   ),
               visualDensity: VisualDensity.adaptivePlatformDensity,
               appBarTheme: AppBarTheme.of(context).copyWith(
-                backgroundColor: Constants.primaryColor,
+                backgroundColor: Constants.backgroundColor,
               )),
-          home: authData.isAuth ? HomeScreen() : RegisterScreen(),
+          home: authData.isAuth
+              ? HomeScreen()
+              : FutureBuilder(
+                  future: authData.tryAutoLogin(),
+                  builder: (ctx, snapshot) =>
+                      snapshot.connectionState == ConnectionState.waiting
+                          ? SplashScreen()
+                          : ((snapshot.data != null
+                                  ? (snapshot.data as bool)
+                                  : false)
+                              ? HomeScreen()
+                              : LoginScreen()),
+                ),
           routes: {
             Routes.registerScreen: (ctx) => RegisterScreen(),
             Routes.loginScreen: (ctx) => const LoginScreen(),
             Routes.homeScreen: (ctx) => HomeScreen(),
+            Routes.ldpInformationScreen: (ctx) => LdpInformationScreen(),
             Routes.historyScreen: (ctx) => const HistoryScreen(),
           },
         ),

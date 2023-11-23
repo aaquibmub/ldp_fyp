@@ -97,14 +97,17 @@ class Utility {
         children: [
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Constants.primaryColor,
+              color: Constants.backgroundColor,
             ),
             child: Text(
               'Hello, ${(currentuser != null ? currentuser.username : ' ')}',
             ),
           ),
           ListTile(
-            title: const Text('Home'),
+            title: Text(
+              'Home',
+              style: Theme.of(context).primaryTextTheme.labelLarge,
+            ),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(
                 Routes.homeScreen,
@@ -112,13 +115,19 @@ class Utility {
             },
           ),
           ListTile(
-            title: const Text('History'),
+            title: Text(
+              'History',
+              style: Theme.of(context).primaryTextTheme.labelLarge,
+            ),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(Routes.historyScreen);
             },
           ),
           ListTile(
-            title: const Text('Logout'),
+            title: Text(
+              'Logout',
+              style: Theme.of(context).primaryTextTheme.labelLarge,
+            ),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
               Provider.of<Auth>(

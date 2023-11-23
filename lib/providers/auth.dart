@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_guid/flutter_guid.dart';
@@ -36,6 +37,11 @@ class Auth with ChangeNotifier {
         (user) => user['username'] == username && user['password'] == password);
     if (user != null) {
       _user = User.fromJson(user);
+      final prefs = await SharedPreferences.getInstance();
+      final userData = json.encode({
+        'user': jsonEncode(_user.toJson()),
+      });
+      prefs.setString('userData', userData);
       return '';
     }
     return 'User not registered';
@@ -49,6 +55,18 @@ class Auth with ChangeNotifier {
       email,
       password,
     );
+  }
+
+  Future<bool> tryAutoLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey('userData')) {
+      return false;
+    }
+    final extractedUserData = json.decode(prefs.getString('userData'));
+
+    _user = User.fromJson(jsonDecode(extractedUserData['user']));
+
+    return true;
   }
 
   Future<String> register(

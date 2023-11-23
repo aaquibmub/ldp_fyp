@@ -1,11 +1,22 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
+
+import '../helpers/common/constants.dart';
+import '../helpers/common/utility.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      drawer: Utility.buildDrawer(context),
+      backgroundColor: Constants.backgroundColor,
+      appBar: AppBar(
+        title: Text(
+          'History',
+        ),
+      ),
+      body: Container(),
+    );
   }
 }
