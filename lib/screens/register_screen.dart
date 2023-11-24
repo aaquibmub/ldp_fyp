@@ -19,7 +19,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String _userName;
   String _email;
   String _password;
-  String _confirmPassword;
+  // String _confirmPassword;
 
   void _setUserName(
     String userName,
@@ -39,11 +39,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _password = password;
   }
 
-  void _setConfirmPassword(
-    String confirmPassword,
-  ) {
-    _confirmPassword = confirmPassword;
-  }
+  // void _setConfirmPassword(
+  //   String confirmPassword,
+  // ) {
+  //   _confirmPassword = confirmPassword;
+  // }
 
   void _showErrorDialogue(BuildContext context, String message) {
     showDialog(
@@ -152,7 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   _setUserName,
                                   _setEmail,
                                   _setPassword,
-                                  _setConfirmPassword,
+                                  // _setConfirmPassword,
                                   _submit,
                                   context,
                                 ),

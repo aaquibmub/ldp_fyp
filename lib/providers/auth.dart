@@ -32,7 +32,7 @@ class Auth with ChangeNotifier {
     String username,
     String password,
   ) async {
-    final users = await DbHelper.getData('users');
+    final users = await DbHelper.instance.getData('users');
     final user = users.firstWhere(
         (user) => user['username'] == username && user['password'] == password);
     if (user != null) {
@@ -74,12 +74,12 @@ class Auth with ChangeNotifier {
     String email,
     String password,
   ) async {
-    final users = await DbHelper.getData('users');
+    final users = await DbHelper.instance.getData('users');
     final user = users.any((user) => user['username'] == username);
     if (user) {
       return 'User already registered';
     }
-    await DbHelper.insert(
+    await DbHelper.instance.insert(
       'users',
       {
         'id': Guid.newGuid.toString(),

@@ -13,9 +13,9 @@ class RegisterForm extends StatefulWidget {
   final void Function(
     String password,
   ) setPasswordFn;
-  final void Function(
-    String confirmPassword,
-  ) setConfirmPasswordFn;
+  // final void Function(
+  //   String confirmPassword,
+  // ) setConfirmPasswordFn;
   final void Function(
     BuildContext context,
   ) submitFormFn;
@@ -25,7 +25,7 @@ class RegisterForm extends StatefulWidget {
     this.setUserNameFn,
     this.setEmailFn,
     this.setPasswordFn,
-    this.setConfirmPasswordFn,
+    // this.setConfirmPasswordFn,
     this.submitFormFn,
     this.parentContext,
   );
@@ -136,7 +136,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   return null;
                 },
                 onSaveFn: (value) {
-                  widget.setConfirmPasswordFn(value);
+                  // widget.setConfirmPasswordFn(value);
                 },
               ),
             ],
