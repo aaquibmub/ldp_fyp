@@ -15,16 +15,36 @@ class DbHelper {
   static final userPassword = 'password';
 
   static final tblPrediction = 'predictions';
+  // Personal Info
   static final predictionId = 'id';
   static final predictionName = 'name';
   static final predictionAge = 'age';
   static final predictionOccupationId = 'occupationId';
   static final predictionAnnualIncome = 'annualIncome';
   static final predictionMonthlyInHandSalary = 'monthlyInHandSalary';
+  // bank details
+  static final predictionNumOfBankAccounts = 'numOfBankAccounts';
+  static final predictionNumOfCreditCards = 'numOfCreditCards';
+  static final predictionIntrestRate = 'intrestRate';
+  static final predictionNumOfLoans = 'numOfLoans';
+
   static final predictionUserId = 'userId';
   static final predictionDate = 'date';
   static final predictionScore = 'score';
 
+  // tblTypeOfLoanAndPrediction
+  static final tblPredictionAndTypeOfLoan = 'prediction_typeofloan';
+  static final predictionAndTypeOfLoanId = 'id';
+  static final predictionAndTypeOfLoanTypeId = 'typeId';
+  static final predictionAndTypeOfLoanPredictionId = 'predictionId';
+
+  // tblTypeOfLoan
+  static final tblTypeOfLoan = 'typesofloan';
+  static final typeOfLoanId = 'id';
+  static final typeOfLoanName = 'name';
+  static final typeOfLoanScore = 'score';
+
+  // tblAgeRange
   static final tblAgeRange = 'agerange';
   static final ageRangeId = 'id';
   static final ageRangeStart = 'start';
@@ -65,6 +85,7 @@ class DbHelper {
 
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
+    // tblUsers
     await db.execute('''
           CREATE TABLE $tblUser (
             $userId TEXT PRIMARY KEY,
@@ -73,6 +94,8 @@ class DbHelper {
             $userPassword TEXT
           )
           ''');
+
+    // tblPredictions
     await db.execute('''
           CREATE TABLE $tblPrediction (
             $predictionId INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -80,12 +103,54 @@ class DbHelper {
             $predictionAge INTEGER,
             $predictionOccupationId INTEGER,
             $predictionAnnualIncome NUMERIC,
-            $predictionMonthlyInHandSalary NUMERIC
-            $predictionUserId TEXT
-            $predictionDate DATE
-            $predictionScore NUMERIC
+            $predictionMonthlyInHandSalary NUMERIC,
+            $predictionUserId TEXT,
+            $predictionDate DATE,
+            $predictionScore NUMERIC,
+            $predictionNumOfBankAccounts INTEGER,
+            $predictionNumOfCreditCards INTEGER,
+            $predictionIntrestRate NUMERIC,
+            $predictionNumOfLoans INTEGER
           )
           ''');
+
+    // tblPredictionAndTypeOfLoan
+    await db.execute('''
+          CREATE TABLE $tblPredictionAndTypeOfLoan (
+            $predictionAndTypeOfLoanId INTEGER PRIMARY KEY AUTOINCREMENT,
+            $predictionAndTypeOfLoanTypeId INTEGER,
+            $predictionAndTypeOfLoanPredictionId INTEGER
+          )
+          ''');
+
+    // tblTypeOfLoan
+    await db.execute('''
+          CREATE TABLE $tblTypeOfLoan (
+            $typeOfLoanId INTEGER PRIMARY KEY,
+            $typeOfLoanName TEXT,
+            $typeOfLoanScore NUMERIC
+          )
+          ''');
+
+    await db.insert(tblTypeOfLoan, {
+      typeOfLoanId: 1,
+      typeOfLoanName: 'Auto Loan',
+      typeOfLoanScore: 20,
+    });
+
+    await db.insert(tblTypeOfLoan, {
+      typeOfLoanId: 2,
+      typeOfLoanName: 'Credit-Builder Loan',
+      typeOfLoanScore: 20,
+    });
+
+    await db.insert(tblTypeOfLoan, {
+      typeOfLoanId: 3,
+      typeOfLoanName: 'Personal Loan',
+      typeOfLoanScore: 50,
+    });
+
+    // tblAgeRange
     await db.execute('''
           CREATE TABLE $tblAgeRange (
             $ageRangeId INTEGER PRIMARY KEY,
@@ -202,8 +267,32 @@ class DbHelper {
     );
   }
 
+  Future<int> update(
+    String table,
+    Map<String, Object> data,
+    int id,
+  ) async {
+    final db = await instance.database;
+    return db.update(
+      table,
+      data,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
   Future<List<Map<String, dynamic>>> getData(String table) async {
     final db = await instance.database;
     return db.query(table);
+  }
+
+  Future<Map<String, dynamic>> getFirstOrDefault(String table, int id) async {
+    final db = await instance.database;
+    return (await db.query(
+      table,
+      where: 'id = ?',
+      whereArgs: [id],
+    ))
+        .first;
   }
 }

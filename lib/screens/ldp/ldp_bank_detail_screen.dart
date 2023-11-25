@@ -1,60 +1,64 @@
 import 'package:flutter/material.dart';
-import 'package:ldp_fyp/providers/loan_provider.dart';
-import 'package:ldp_fyp/screens/ldp/ldp_bank_detail_screen.dart';
+import 'package:ldp_fyp/helpers/models/common/dropdown_item.dart';
+import 'package:ldp_fyp/screens/ldp/ldp_complete_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/common/constants.dart';
 import '../../helpers/common/utility.dart';
-import '../../helpers/models/common/dropdown_item.dart';
-import '../../helpers/models/ldp/ldp_information-model.dart';
-import '../../widgets/ldp/lpd_information_form.dart';
+import '../../helpers/models/ldp/ldp_bank_detail_model.dart';
+import '../../providers/loan_provider.dart';
+import '../../widgets/ldp/ldp_bank_detail_form.dart';
 import '../loading_screen.dart';
 
-class LdpInformationScreen extends StatefulWidget {
-  const LdpInformationScreen({Key key}) : super(key: key);
+class LdpBankDetailScreen extends StatefulWidget {
+  final int pid;
+  const LdpBankDetailScreen(
+    this.pid, {
+    Key key,
+  }) : super(key: key);
 
   @override
-  State<LdpInformationScreen> createState() => _LdpInformationScreenState();
+  State<LdpBankDetailScreen> createState() => _LdpBankDetailScreenState();
 }
 
-class _LdpInformationScreenState extends State<LdpInformationScreen> {
+class _LdpBankDetailScreenState extends State<LdpBankDetailScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   bool _isLoading = false;
 
-  String _name;
-  int _age;
-  DropdownItem<int> _occupation;
-  double _annualIncome;
-  double _monthlyInHandSalary;
+  int _numOfBankAccounts;
+  int _numOfCreditCards;
+  double _intrestRate;
+  int _numOfLoans;
+  List<DropdownItem<int>> _typesOfLoan;
 
-  void _setName(
-    String name,
+  void _setNumOfBankAccounts(
+    int numOfBankAccounts,
   ) {
-    _name = name;
+    _numOfBankAccounts = numOfBankAccounts;
   }
 
-  void _setAge(
-    int age,
+  void _setNumOfCreditCards(
+    int numOfCreditCards,
   ) {
-    _age = age;
+    _numOfCreditCards = numOfCreditCards;
   }
 
-  void _setOccupation(
-    DropdownItem<int> occupation,
+  void _setIntrestRate(
+    double intrestRate,
   ) {
-    _occupation = occupation;
+    _intrestRate = intrestRate;
   }
 
-  void _setAnnualIncome(
-    double annualIncome,
+  void _setNumOfLoans(
+    int numOfLoans,
   ) {
-    _annualIncome = annualIncome;
+    _numOfLoans = numOfLoans;
   }
 
-  void _setMonthlySalary(
-    double monthlySalary,
+  void _setTypesOfLoan(
+    List<DropdownItem<int>> typesOfLoan,
   ) {
-    _monthlyInHandSalary = monthlySalary;
+    _typesOfLoan = typesOfLoan;
   }
 
   void _showErrorDialogue(BuildContext context, String message) {
@@ -88,13 +92,13 @@ class _LdpInformationScreenState extends State<LdpInformationScreen> {
       var response = await Provider.of<LoanProvider>(
         context,
         listen: false,
-      ).createPrediction(LdpInformationModel(
-        0,
-        _name,
-        _age,
-        _occupation,
-        _annualIncome,
-        _monthlyInHandSalary,
+      ).updatePredictionBankDetails(LdpBankDetailModel(
+        widget.pid,
+        _numOfBankAccounts,
+        _numOfCreditCards,
+        _intrestRate,
+        _numOfLoans,
+        _typesOfLoan,
       ));
 
       setState(() {
@@ -107,8 +111,8 @@ class _LdpInformationScreenState extends State<LdpInformationScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => LdpBankDetailScreen(
-              response.result,
+            builder: (context) => LdpCompleteScreen(
+              widget.pid,
             ),
           ),
         );
@@ -117,7 +121,7 @@ class _LdpInformationScreenState extends State<LdpInformationScreen> {
       setState(() {
         _isLoading = false;
       });
-      const errorMessage = 'Could not add';
+      const errorMessage = 'Could not update';
       _showErrorDialogue(context, errorMessage);
     }
   }
@@ -172,20 +176,20 @@ class _LdpInformationScreenState extends State<LdpInformationScreen> {
                                   height: 40,
                                 ),
                                 Text(
-                                  'Personal Information',
+                                  'Bank and Loan',
                                   style:
                                       Theme.of(context).textTheme.displaySmall,
                                 ),
                                 SizedBox(
                                   height: 70,
                                 ),
-                                LdpInformationForm(
+                                LdpBankDetailForm(
                                   _formKey,
-                                  _setName,
-                                  _setAge,
-                                  _setOccupation,
-                                  _setAnnualIncome,
-                                  _setMonthlySalary,
+                                  _setNumOfBankAccounts,
+                                  _setNumOfCreditCards,
+                                  _setTypesOfLoan,
+                                  _setIntrestRate,
+                                  _setNumOfLoans,
                                   _submit,
                                   context,
                                 ),
