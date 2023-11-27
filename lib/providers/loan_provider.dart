@@ -104,7 +104,59 @@ class LoanProvider with ChangeNotifier {
     try {
       final dbPredications = (await DbHelper.instance
           .getFirstOrDefault(DbHelper.tblPrediction, pid));
-      return 26;
+      if (dbPredications == null) {
+        return 100;
+      }
+
+      // age
+      final age = dbPredications[DbHelper.predictionAge] as int;
+      double ageScore = 0;
+      final ageRanges = await DbHelper.instance.getData(DbHelper.tblAgeRange);
+
+      final ageRange = ageRanges
+          .where((w) =>
+              age >= w[DbHelper.ageRangeStart] && age < w[DbHelper.ageRangeEnd])
+          .first;
+
+      if (ageRange != null) {
+        ageScore = double.parse(ageRange[DbHelper.ageRangeScore].toString());
+      }
+
+      // occupation
+      final occupationId =
+          dbPredications[DbHelper.predictionOccupationId] as int;
+      double occupationScore = 0;
+      final occupations =
+          await DbHelper.instance.getData(DbHelper.tblOccupation);
+
+      final occupation = occupations
+          .where((w) => occupationId == w[DbHelper.occupationId])
+          .first;
+
+      if (occupation != null) {
+        occupationScore =
+            double.parse(occupation[DbHelper.occupationScore].toString());
+      }
+
+// annual income
+      final annualIncome = double.parse(
+          dbPredications[DbHelper.predictionAnnualIncome].toString());
+      double annualIncomeScore = 0;
+      final annualIncomeRanges =
+          await DbHelper.instance.getData(DbHelper.tblAnnualIncomeRange);
+
+      final annualIncomeRange = annualIncomeRanges
+          .where((w) =>
+              age >= w[DbHelper.annualIncomeRangeStart] &&
+              age < w[DbHelper.annualIncomeRangeEnd])
+          .first;
+
+      if (annualIncomeRange != null) {
+        ageScore = double.parse(
+            annualIncomeRange[DbHelper.annualIncomeRangeScore].toString());
+      }
+
+      return (ageScore + occupationScore + annualIncomeScore) / 3;
     } catch (error) {
       throw error;
     }

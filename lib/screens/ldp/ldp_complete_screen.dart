@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/common/constants.dart';
+import '../../helpers/common/routes.dart';
 import '../../providers/loan_provider.dart';
 import '../loading_screen.dart';
 
@@ -40,6 +41,24 @@ class _LdpCompleteScreenState extends State<LdpCompleteScreen> {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
+
+    Widget buildSubmitButton() {
+      return TextButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(
+                Theme.of(context).backgroundColor)),
+        onPressed: () {
+          Navigator.of(context).pushReplacementNamed(Routes.homeScreen);
+        },
+        child: Text(
+          'Go to Home',
+          style: Theme.of(context).primaryTextTheme.labelLarge,
+        ),
+        // elevation: 0,
+        // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      );
+    }
+
     return Scaffold(
       backgroundColor: Constants.backgroundColor,
       appBar: AppBar(
@@ -79,7 +98,7 @@ class _LdpCompleteScreenState extends State<LdpCompleteScreen> {
                                 ),
                                 Center(
                                   child: Text(
-                                    '${predictionResult.toString()} %',
+                                    '${predictionResult.toStringAsFixed(2)} %',
                                     style: TextStyle(
                                       fontSize: 80,
                                       fontWeight: FontWeight.bold,
@@ -89,6 +108,12 @@ class _LdpCompleteScreenState extends State<LdpCompleteScreen> {
                                 ),
                                 SizedBox(
                                   height: 30,
+                                ),
+                                Center(
+                                  child: Container(
+                                    width: 400,
+                                    child: buildSubmitButton(),
+                                  ),
                                 ),
                               ],
                             ),
