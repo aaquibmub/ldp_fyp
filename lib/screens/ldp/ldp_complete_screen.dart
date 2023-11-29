@@ -89,7 +89,7 @@ class _LdpCompleteScreenState extends State<LdpCompleteScreen> {
                                   height: 40,
                                 ),
                                 Text(
-                                  'The percentage that the user might default is',
+                                  'Will you default?',
                                   style:
                                       Theme.of(context).textTheme.displaySmall,
                                 ),
@@ -98,7 +98,7 @@ class _LdpCompleteScreenState extends State<LdpCompleteScreen> {
                                 ),
                                 Center(
                                   child: Text(
-                                    '${predictionResult.toStringAsFixed(2)} %',
+                                    predictionResult == 1 ? 'Yes' : 'No',
                                     style: TextStyle(
                                       fontSize: 80,
                                       fontWeight: FontWeight.bold,

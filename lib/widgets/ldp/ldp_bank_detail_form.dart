@@ -133,7 +133,7 @@ class _LdpBankDetailFormState extends State<LdpBankDetailForm> {
                 height: 30,
               ),
               FormTextField(
-                fieldLabel: 'Intrest Rate (%)',
+                fieldLabel: 'Delayed From Due Date',
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
                 onFieldSubmittedFn: (_) {
@@ -143,7 +143,7 @@ class _LdpBankDetailFormState extends State<LdpBankDetailForm> {
                   return null;
                 },
                 onSaveFn: (value) {
-                  widget.setIntrestRateFn(double.parse(value));
+                  widget.setDelayedFromDueDateFn(int.parse(value));
                 },
               ),
               SizedBox(

@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart' as sql;
 import 'package:sqflite/sqlite_api.dart';
 
 class DbHelper {
-  static final _databaseName = "ldp_fyp.db";
+  static final _databaseName = "ldp_fyp_2.db";
   static final _databaseVersion = 1;
   static const orderByAsc = 'ASC';
   static const orderByDesc = 'DESC';
@@ -98,15 +98,15 @@ class DbHelper {
             $predictionNumOfBankAccounts INTEGER,
             $predictionNumOfCreditCards INTEGER,
             $predictionIntrestRate NUMERIC,
-            $predictionNumOfLoans INTEGER
-            $predictionDelayFormDueDate INTEGER
-            $predictionNumberofDelayedPayment INTEGER
-            $predictionChangedCreditLimit NUMERIC
-            $predictionNumberofCreditInquiries INTEGER
-            $predictionCreditMix INTEGER
-            $predictionCreditUtilizationRatio NUMERIC
-            $predictionCreditHistoryAge INTEGER
-            $predictionMonthlyBalance INTEGER
+            $predictionNumOfLoans INTEGER,
+            $predictionDelayFormDueDate INTEGER,
+            $predictionNumberofDelayedPayment INTEGER,
+            $predictionChangedCreditLimit NUMERIC,
+            $predictionNumberofCreditInquiries INTEGER,
+            $predictionCreditMix INTEGER,
+            $predictionCreditUtilizationRatio NUMERIC,
+            $predictionCreditHistoryAge INTEGER,
+            $predictionMonthlyBalance NUMERIC
           )
           ''');
 

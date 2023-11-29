@@ -1,63 +1,74 @@
 import 'package:flutter/material.dart';
-import 'package:ldp_fyp/screens/ldp/ldp_credit_detail_screen.dart';
+import 'package:ldp_fyp/screens/ldp/ldp_complete_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/common/constants.dart';
 import '../../helpers/common/utility.dart';
-import '../../helpers/models/ldp/ldp_bank_detail_model.dart';
+import '../../helpers/models/ldp/ldp_credit_detail_model.dart';
 import '../../providers/loan_provider.dart';
-import '../../widgets/ldp/ldp_bank_detail_form.dart';
+import '../../widgets/ldp/ldp_credit_detail_form.dart';
 import '../loading_screen.dart';
 
-class LdpBankDetailScreen extends StatefulWidget {
+class LdpCreditDetailScreen extends StatefulWidget {
   final int pid;
-  const LdpBankDetailScreen(
-    this.pid, {
-    Key key,
-  }) : super(key: key);
+  const LdpCreditDetailScreen(this.pid, {Key key}) : super(key: key);
 
   @override
-  State<LdpBankDetailScreen> createState() => _LdpBankDetailScreenState();
+  State<LdpCreditDetailScreen> createState() => _LdpCreditDetailScreenState();
 }
 
-class _LdpBankDetailScreenState extends State<LdpBankDetailScreen> {
+class _LdpCreditDetailScreenState extends State<LdpCreditDetailScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   bool _isLoading = false;
 
-  int _numOfBankAccounts;
-  int _numOfCreditCards;
-  double _intrestRate;
-  int _numOfLoans;
-  int _delayedFromDueDate;
+  int _numOfDelayedPayment;
+  double _changedCreditLimit;
+  int _numOfCreditInquiries;
+  int _creditMix;
+  double _creditUtilizationRatio;
+  int _creditHistoryAge;
+  double _monthlyBalance;
 
-  void _setNumOfBankAccounts(
-    int numOfBankAccounts,
+  void _setNumOfDelayedPayments(
+    int numOfDelayedPayment,
   ) {
-    _numOfBankAccounts = numOfBankAccounts;
+    _numOfDelayedPayment = numOfDelayedPayment;
   }
 
-  void _setNumOfCreditCards(
-    int numOfCreditCards,
+  void _setChangedCreditLimit(
+    double changedCreditLimit,
   ) {
-    _numOfCreditCards = numOfCreditCards;
+    _changedCreditLimit = changedCreditLimit;
   }
 
-  void _setIntrestRate(
-    double intrestRate,
+  void _setNumOfCreditInquiries(
+    int numOfCreditInquiries,
   ) {
-    _intrestRate = intrestRate;
+    _numOfCreditInquiries = numOfCreditInquiries;
   }
 
-  void _setNumOfLoans(
-    int numOfLoans,
+  void _setCreditMix(
+    int creditMix,
   ) {
-    _numOfLoans = numOfLoans;
+    _creditMix = creditMix;
   }
 
-  void _setDelayedFromDueDate(
-    int delayedFromDueDate,
+  void _setCreditUtilizationRatio(
+    double creditUtilizationRatio,
   ) {
-    _delayedFromDueDate = delayedFromDueDate;
+    _creditUtilizationRatio = creditUtilizationRatio;
+  }
+
+  void _setCreditHistoryAge(
+    int creditHistoryAge,
+  ) {
+    _creditHistoryAge = creditHistoryAge;
+  }
+
+  void _setMonthlyBalance(
+    double monthlyBalance,
+  ) {
+    _monthlyBalance = monthlyBalance;
   }
 
   void _showErrorDialogue(BuildContext context, String message) {
@@ -91,13 +102,15 @@ class _LdpBankDetailScreenState extends State<LdpBankDetailScreen> {
       var response = await Provider.of<LoanProvider>(
         context,
         listen: false,
-      ).updatePredictionBankDetails(LdpBankDetailModel(
+      ).updatePredictionCreditDetails(LdpCreditDetailModel(
         widget.pid,
-        _numOfBankAccounts,
-        _numOfCreditCards,
-        _intrestRate,
-        _numOfLoans,
-        _delayedFromDueDate,
+        _numOfDelayedPayment,
+        _changedCreditLimit,
+        _numOfCreditInquiries,
+        _creditMix,
+        _creditUtilizationRatio,
+        _creditHistoryAge,
+        _monthlyBalance,
       ));
 
       setState(() {
@@ -110,7 +123,7 @@ class _LdpBankDetailScreenState extends State<LdpBankDetailScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => LdpCreditDetailScreen(
+            builder: (context) => LdpCompleteScreen(
               widget.pid,
             ),
           ),
@@ -136,7 +149,7 @@ class _LdpBankDetailScreenState extends State<LdpBankDetailScreen> {
                 Theme.of(context).backgroundColor)),
         onPressed: () => _submit(context),
         child: Text(
-          'Proceed',
+          'Complete',
           style: Theme.of(context).primaryTextTheme.labelLarge,
         ),
         // elevation: 0,
@@ -175,20 +188,22 @@ class _LdpBankDetailScreenState extends State<LdpBankDetailScreen> {
                                   height: 40,
                                 ),
                                 Text(
-                                  'Bank and Loan',
+                                  'Credit Details',
                                   style:
                                       Theme.of(context).textTheme.displaySmall,
                                 ),
                                 SizedBox(
                                   height: 70,
                                 ),
-                                LdpBankDetailForm(
+                                LdpCreditDetailForm(
                                   _formKey,
-                                  _setNumOfBankAccounts,
-                                  _setNumOfCreditCards,
-                                  _setDelayedFromDueDate,
-                                  _setIntrestRate,
-                                  _setNumOfLoans,
+                                  _setNumOfDelayedPayments,
+                                  _setChangedCreditLimit,
+                                  _setNumOfCreditInquiries,
+                                  _setCreditMix,
+                                  _setCreditUtilizationRatio,
+                                  _setCreditHistoryAge,
+                                  _setMonthlyBalance,
                                   _submit,
                                   context,
                                 ),

@@ -60,6 +60,6 @@ class LdpBankDetailModel {
         DbHelper.predictionNumOfCreditCards: instance.numOfCreditCards,
         DbHelper.predictionIntrestRate: instance.intrestRate,
         DbHelper.predictionNumOfLoans: instance.numOfLoans,
-        DbHelper.predictionDelayFormDueDate: instance.numOfLoans,
+        DbHelper.predictionDelayFormDueDate: instance.delayedFromDueDate,
       };
 }
