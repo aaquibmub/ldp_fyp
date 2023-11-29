@@ -27,40 +27,28 @@ class DbHelper {
   static final predictionNumOfCreditCards = 'numOfCreditCards';
   static final predictionIntrestRate = 'intrestRate';
   static final predictionNumOfLoans = 'numOfLoans';
+  static final predictionDelayFormDueDate = 'delayFormDueDate';
+// other details
+  static final predictionNumberofDelayedPayment = 'numberOfDelayedPayment';
+  static final predictionChangedCreditLimit = 'changedCreditLimit';
+  static final predictionNumberofCreditInquiries = 'numberofCreditInquiries';
+  static final predictionCreditMix = 'creditMix';
+  static final predictionCreditUtilizationRatio = 'creditUtilizationRatio';
+  static final predictionCreditHistoryAge = 'creditHistoryAge';
+  static final predictionMonthlyBalance = 'monthlyBalance';
 
   static final predictionUserId = 'userId';
   static final predictionDate = 'date';
   static final predictionScore = 'score';
 
-  // tblTypeOfLoanAndPrediction
-  static final tblPredictionAndTypeOfLoan = 'prediction_typeofloan';
-  static final predictionAndTypeOfLoanId = 'id';
-  static final predictionAndTypeOfLoanTypeId = 'typeId';
-  static final predictionAndTypeOfLoanPredictionId = 'predictionId';
-
-  // tblTypeOfLoan
-  static final tblTypeOfLoan = 'typesofloan';
-  static final typeOfLoanId = 'id';
-  static final typeOfLoanName = 'name';
-  static final typeOfLoanScore = 'score';
-
-  // tblAgeRange
-  static final tblAgeRange = 'agerange';
-  static final ageRangeId = 'id';
-  static final ageRangeStart = 'start';
-  static final ageRangeEnd = 'end';
-  static final ageRangeScore = 'score';
-
   static final tblOccupation = 'occupations';
   static final occupationId = 'id';
   static final occupationName = 'name';
-  static final occupationScore = 'score';
 
   static final tblAnnualIncomeRange = 'annualincomerange';
   static final annualIncomeRangeId = 'id';
   static final annualIncomeRangeStart = 'start';
   static final annualIncomeRangeEnd = 'end';
-  static final annualIncomeRangeScore = 'score';
 
   DbHelper._privateConstructor();
   static final DbHelper instance = DbHelper._privateConstructor();
@@ -111,122 +99,104 @@ class DbHelper {
             $predictionNumOfCreditCards INTEGER,
             $predictionIntrestRate NUMERIC,
             $predictionNumOfLoans INTEGER
+            $predictionDelayFormDueDate INTEGER
+            $predictionNumberofDelayedPayment INTEGER
+            $predictionChangedCreditLimit NUMERIC
+            $predictionNumberofCreditInquiries INTEGER
+            $predictionCreditMix INTEGER
+            $predictionCreditUtilizationRatio NUMERIC
+            $predictionCreditHistoryAge INTEGER
+            $predictionMonthlyBalance INTEGER
           )
           ''');
-
-    // tblPredictionAndTypeOfLoan
-    await db.execute('''
-          CREATE TABLE $tblPredictionAndTypeOfLoan (
-            $predictionAndTypeOfLoanId INTEGER PRIMARY KEY AUTOINCREMENT,
-            $predictionAndTypeOfLoanTypeId INTEGER,
-            $predictionAndTypeOfLoanPredictionId INTEGER
-          )
-          ''');
-
-    // tblTypeOfLoan
-    await db.execute('''
-          CREATE TABLE $tblTypeOfLoan (
-            $typeOfLoanId INTEGER PRIMARY KEY,
-            $typeOfLoanName TEXT,
-            $typeOfLoanScore NUMERIC
-          )
-          ''');
-
-    await db.insert(tblTypeOfLoan, {
-      typeOfLoanId: 1,
-      typeOfLoanName: 'Auto Loan',
-      typeOfLoanScore: 20,
-    });
-
-    await db.insert(tblTypeOfLoan, {
-      typeOfLoanId: 2,
-      typeOfLoanName: 'Credit-Builder Loan',
-      typeOfLoanScore: 20,
-    });
-
-    await db.insert(tblTypeOfLoan, {
-      typeOfLoanId: 3,
-      typeOfLoanName: 'Personal Loan',
-      typeOfLoanScore: 50,
-    });
-
-    // tblAgeRange
-    await db.execute('''
-          CREATE TABLE $tblAgeRange (
-            $ageRangeId INTEGER PRIMARY KEY,
-            $ageRangeStart INTEGER,
-            $ageRangeEnd INTEGER,
-            $ageRangeScore NUMERIC
-          )
-          ''');
-
-    await db.insert(tblAgeRange, {
-      ageRangeId: 1,
-      ageRangeStart: 10,
-      ageRangeEnd: 20,
-      ageRangeScore: 90,
-    });
-
-    await db.insert(tblAgeRange, {
-      ageRangeId: 2,
-      ageRangeStart: 20,
-      ageRangeEnd: 30,
-      ageRangeScore: 50,
-    });
-
-    await db.insert(tblAgeRange, {
-      ageRangeId: 3,
-      ageRangeStart: 30,
-      ageRangeEnd: 40,
-      ageRangeScore: 20,
-    });
-
-    await db.insert(tblAgeRange, {
-      ageRangeId: 4,
-      ageRangeStart: 40,
-      ageRangeEnd: 60,
-      ageRangeScore: 15,
-    });
-
-    await db.insert(tblAgeRange, {
-      ageRangeId: 5,
-      ageRangeStart: 60,
-      ageRangeEnd: null,
-      ageRangeScore: 40,
-    });
 
     await db.execute('''
           CREATE TABLE $tblOccupation (
             $occupationId INTEGER PRIMARY KEY,
-            $occupationName INTEGER,
-            $ageRangeScore NUMERIC
+            $occupationName INTEGER
           )
           ''');
 
     await db.insert(tblOccupation, {
       occupationId: 1,
-      occupationName: 'Student',
-      occupationScore: 90,
+      occupationName: 'Scientist',
     });
 
     await db.insert(tblOccupation, {
       occupationId: 2,
-      occupationName: 'Bussinesmen',
-      occupationScore: 20,
+      occupationName: 'Teacher',
     });
 
     await db.insert(tblOccupation, {
       occupationId: 3,
-      occupationName: 'Government Officer',
-      occupationScore: 15,
+      occupationName: 'Engineer',
+    });
+
+    await db.insert(tblOccupation, {
+      occupationId: 4,
+      occupationName: 'Entrepreneur',
+    });
+
+    await db.insert(tblOccupation, {
+      occupationId: 5,
+      occupationName: 'Developer',
+    });
+
+    await db.insert(tblOccupation, {
+      occupationId: 6,
+      occupationName: 'Lawyer',
+    });
+
+    await db.insert(tblOccupation, {
+      occupationId: 7,
+      occupationName: 'Media-Manager',
+    });
+
+    await db.insert(tblOccupation, {
+      occupationId: 8,
+      occupationName: 'Doctor',
+    });
+
+    await db.insert(tblOccupation, {
+      occupationId: 9,
+      occupationName: 'Journalist',
+    });
+
+    await db.insert(tblOccupation, {
+      occupationId: 10,
+      occupationName: 'Manager',
+    });
+
+    await db.insert(tblOccupation, {
+      occupationId: 11,
+      occupationName: 'Accountant',
+    });
+
+    await db.insert(tblOccupation, {
+      occupationId: 12,
+      occupationName: 'Musician',
+    });
+
+    await db.insert(tblOccupation, {
+      occupationId: 13,
+      occupationName: 'Mechanic',
+    });
+
+    await db.insert(tblOccupation, {
+      occupationId: 14,
+      occupationName: 'Writer',
+    });
+
+    await db.insert(tblOccupation, {
+      occupationId: 15,
+      occupationName: 'Architect',
     });
 
     await db.execute('''
           CREATE TABLE $tblAnnualIncomeRange (
             $annualIncomeRangeId INTEGER PRIMARY KEY,
             $annualIncomeRangeStart INTEGER,
-            $annualIncomeRangeEnd INTEGER,
-            $annualIncomeRangeScore NUMERIC
+            $annualIncomeRangeEnd INTEGER
           )
           ''');
 
@@ -234,27 +204,23 @@ class DbHelper {
       annualIncomeRangeId: 1,
       annualIncomeRangeStart: 10,
       annualIncomeRangeEnd: 30,
-      annualIncomeRangeScore: 40,
     });
 
     await db.insert(tblAnnualIncomeRange, {
       annualIncomeRangeId: 2,
       annualIncomeRangeStart: 30,
       annualIncomeRangeEnd: 60,
-      annualIncomeRangeScore: 30,
     });
 
     await db.insert(tblAnnualIncomeRange, {
       annualIncomeRangeId: 3,
       annualIncomeRangeStart: 60,
       annualIncomeRangeEnd: 100,
-      annualIncomeRangeScore: 20,
     });
 
     await db.insert(tblAnnualIncomeRange, {
       annualIncomeRangeId: 4,
       annualIncomeRangeStart: 100,
-      annualIncomeRangeScore: 10,
     });
   }
 

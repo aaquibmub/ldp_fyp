@@ -88,6 +88,14 @@ class _HomeScreenState extends State<HomeScreen> {
             () {
               Navigator.of(context)
                   .pushReplacementNamed(Routes.ldpInformationScreen);
+              // Navigator.pushReplacement(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => LdpCompleteScreen(
+              //       1,
+              //     ),
+              //   ),
+              // );
             },
             Icons.bar_chart_sharp,
             'Loan Default Prediction',

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ldp_fyp/helpers/models/common/dropdown_item.dart';
 import 'package:ldp_fyp/screens/ldp/ldp_complete_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +28,7 @@ class _LdpBankDetailScreenState extends State<LdpBankDetailScreen> {
   int _numOfCreditCards;
   double _intrestRate;
   int _numOfLoans;
-  List<DropdownItem<int>> _typesOfLoan;
+  int _delayedFromDueDate;
 
   void _setNumOfBankAccounts(
     int numOfBankAccounts,
@@ -55,10 +54,10 @@ class _LdpBankDetailScreenState extends State<LdpBankDetailScreen> {
     _numOfLoans = numOfLoans;
   }
 
-  void _setTypesOfLoan(
-    List<DropdownItem<int>> typesOfLoan,
+  void _setDelayedFromDueDate(
+    int delayedFromDueDate,
   ) {
-    _typesOfLoan = typesOfLoan;
+    _delayedFromDueDate = _delayedFromDueDate;
   }
 
   void _showErrorDialogue(BuildContext context, String message) {
@@ -98,7 +97,7 @@ class _LdpBankDetailScreenState extends State<LdpBankDetailScreen> {
         _numOfCreditCards,
         _intrestRate,
         _numOfLoans,
-        _typesOfLoan,
+        _delayedFromDueDate,
       ));
 
       setState(() {
@@ -187,7 +186,7 @@ class _LdpBankDetailScreenState extends State<LdpBankDetailScreen> {
                                   _formKey,
                                   _setNumOfBankAccounts,
                                   _setNumOfCreditCards,
-                                  _setTypesOfLoan,
+                                  _setDelayedFromDueDate,
                                   _setIntrestRate,
                                   _setNumOfLoans,
                                   _submit,

@@ -1,5 +1,4 @@
 import '../../db_helper.dart';
-import '../common/dropdown_item.dart';
 
 class LdpBankDetailModel {
   final int id;
@@ -7,7 +6,7 @@ class LdpBankDetailModel {
   int numOfCreditCards;
   double intrestRate;
   int numOfLoans;
-  List<DropdownItem<int>> typesOfLoan;
+  int delayedFromDueDate;
 
   LdpBankDetailModel(
     this.id,
@@ -15,17 +14,17 @@ class LdpBankDetailModel {
     this.numOfCreditCards,
     this.intrestRate,
     this.numOfLoans,
-    this.typesOfLoan,
+    this.delayedFromDueDate,
   );
   factory LdpBankDetailModel.fromJson(dynamic json) {
-    final List<DropdownItem<int>> typesOfLoan = [];
-    final exItems = json['typesOfLoan'] as List<dynamic>;
-    if (exItems != null) {
-      exItems.forEach((value) {
-        DropdownItem<int> prod = DropdownItem<int>.fromJson((value));
-        typesOfLoan.add(prod);
-      });
-    }
+    // final List<DropdownItem<int>> typesOfLoan = [];
+    // final exItems = json['typesOfLoan'] as List<dynamic>;
+    // if (exItems != null) {
+    //   exItems.forEach((value) {
+    //     DropdownItem<int> prod = DropdownItem<int>.fromJson((value));
+    //     typesOfLoan.add(prod);
+    //   });
+    // }
 
     return LdpBankDetailModel(
       json['id'] as int,
@@ -33,7 +32,7 @@ class LdpBankDetailModel {
       json['numOfCreditCards'] as int,
       json['intrestRate'] as double,
       json['numOfLoans'] as int,
-      typesOfLoan,
+      json['delayedFromDueDate'] as int,
     );
   }
 
@@ -61,5 +60,6 @@ class LdpBankDetailModel {
         DbHelper.predictionNumOfCreditCards: instance.numOfCreditCards,
         DbHelper.predictionIntrestRate: instance.intrestRate,
         DbHelper.predictionNumOfLoans: instance.numOfLoans,
+        DbHelper.predictionDelayFormDueDate: instance.numOfLoans,
       };
 }
